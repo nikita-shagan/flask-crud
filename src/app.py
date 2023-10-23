@@ -39,13 +39,14 @@ def create_item():
     return parse_json(inserted_item.inserted_id), 201
 
 
-@app.route('/items/<item_id>', methods=['DELETE'])
-def delete_item(item_id):
-    item_id_obj = ObjectId(item_id)
-    result = mongo.db.items.delete_one({'_id': item_id_obj})
-    if result.deleted_count == 0:
-        return parse_json({'error': 'Item not found'}), 404
-    return parse_json({'message': 'Item deleted successfully'}), 200
+@app.route('/items/<item_id>', methods=['PUT'])
+def update_item(item_id):
+    new_data = request.get_json()
+    updated_item = mongo.db.items.update_one(
+        {'_id': ObjectId(item_id)},
+        { '$set': new_data }
+    )
+    return parse_json(updated_item.raw_result), 200
 
 
 if __name__ == "__main__":
