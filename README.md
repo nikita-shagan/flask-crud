@@ -5,7 +5,7 @@ Application allows to create, read and update items in MongoDB database
 
 ### Local setup:
 ```
-docker-compose up -d
+docker-compose up -d --build
 ```
 
 ### Postman testing example:
@@ -31,8 +31,11 @@ GET
 http://localhost:5000/items/<id>
 ```
 
-##### Delete specific item
+##### Update specific item
 ```
-DELETE
+PUT
 http://localhost:5000/items/<id>
+{
+    "hello": "new world"
+}
 ```
